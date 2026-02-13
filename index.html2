@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Для тебя 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #ffeccf);
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Экраны */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding-top: 80px;
+    animation: fade 0.8s ease;
+}
+
+.active {
+    display: block;
+}
+
+button {
+    margin: 15px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    background: white;
+    color: #ff7aa2;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 122, 162, 0.3);
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+img {
+    width: 240px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #ff5f94;
+}
+
+.big-love {
+    font-size: 42px;
+    margin-top: 20px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Анимации */
+@keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
+
+/* Падающие сердечки */
+.heart {
+    position: fixed;
+    top: -20px;
+    width: 15px;
+    height: 15px;
+    background: #ff9ac2;
+    transform: rotate(45deg);
+    animation: fall linear infinite;
+    z-index: -1;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #ff9ac2;
+    border-radius: 50%;
+}
+
+.heart::before { top: -8px; left: 0; }
+.heart::after { left: -8px; top: 0; }
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ЭКРАН 1: Письмо -->
+<div id="screen1" class="screen active">
+    <img src="letter.gif">
+    <h1>У меня для тебя письмо... 💌</h1>
+    <button onclick="next(2)">Далее</button>
+</div>
+
+<!-- ЭКРАН 2: Котик -->
+<div id="screen2" class="screen">
+    <img src="yes.gif">
+    <h1>Хочешь открыть? (´• ω •`)</h1>
+    <button onclick="next(4)">Нет</button>
+    <button onclick="next(3)">Открыть</button>
+</div>
+
+<!-- ЭКРАН НЕТ: злой -->
+<div id="screen4" class="screen">
+    <img src="angry.gif">
+    <h1>Почему? ٩(ఠ益ఠ)۶</h1>
+    <button onclick="next(2)">Вернуться</button>
+    <button onclick="next(3)">Да...</button>
+</div>
+
+<!-- ЭКРАН ФИНАЛ: Любовь -->
+<div id="screen3" class="screen">
+    <img src="cat.gif">
+    <h1>О нет, это не сиськи</h1>
+    <div class="big-love">Я люблю тебя (♡°▽°♡)</div>
+</div>
+
+<script>
+function next(screenNumber) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + screenNumber).classList.add('active');
+}
+
+/* Сердечки всегда */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 8000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
